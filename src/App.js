@@ -1,25 +1,46 @@
-import logo from './logo.svg';
 import './App.css';
+import {MonButton} from "./components/MonButton";
+import styled from 'styled-components';
+import {useEffect, useState} from "react";
 
 function App() {
+
+  const [imgSet, setImgSet] = useState(null);
+
+  const getImages = async () => {
+    let imgList = [];
+    for(let i = 1; i < 500; i++) {
+      let img = require(`./../assets/${i}.png`);
+      imgList.push(<img key={i} src={img} />);
+    }
+    setImgSet(imgList)
+  };
+
+  const handleClick = () => {
+
+  }
+
+  useEffect(() => {
+    getImages();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContainer className="App">
+      {imgSet}
+    </AppContainer>
   );
 }
+
+const AppContainer = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-wrap: wrap; 
+  
+  > img {
+    max-width: 200px;
+    max-height: 200px;
+  }
+`;
 
 export default App;
